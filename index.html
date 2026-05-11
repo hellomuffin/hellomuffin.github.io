@@ -1,210 +1,521 @@
 <!DOCTYPE html>
+<html>
+
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Chenhao Zheng</title>
+    <link rel="shortcut icon" type="image/webp" href="images/Paddington%20Bear%20head.webp" />
+    <meta name="description" content="Chenhao Zheng's Personal Website">
+    <meta name="keywords" content="Chenhao Zheng, 郑晨浩, computer vision, video understanding, vision-language models">
     <meta name="author" content="Chenhao Zheng">
-    <meta name="keywords" content="Chenhao Zheng, 郑晨浩, Chenhao" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="Chenhao Zheng">
-	<meta property="og:description" content="">
+    <meta property="og:description" content="">
     <meta property="og:image" content="https://hellomuffin.github.io/files/newme.png">
-	<meta property="og:url" content="https://hellomuffin.github.io/">
-	<meta name="twitter:card" content="summary_large_image">
-    <link rel="apple-touch-icon" href="files/uw.png">
-    <link rel="icon" type="image/png" href="files/uw.png">
-    <link rel="manifest" href="files/site.webmanifest">
-    <link rel="stylesheet" href="style.css">
+    <meta property="og:url" content="https://hellomuffin.github.io/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/slider.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.css">
+    <link rel="stylesheet" href="assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <script src="assets/js/modernizr-2.6.2.min.js.download"></script>
+    <script src="assets/js/jquery.min.js.download"></script>
+    <script src="assets/js/owl.carousel.min.js.download"></script>
+    <script src="assets/js/bootstrap.min.js.download"></script>
+    <script src="assets/js/wow.min.js.download"></script>
+    <script src="assets/js/slider.js.download"></script>
+    <script src="assets/js/jquery.fancybox.js.download"></script>
+    <script src="assets/js/main.js.download"></script>
+    <style type="text/css">
+        .fancybox-margin { margin-right: 16px; }
+        .highlight-paper { background-color: #fff8df; padding: 8px 12px; border-radius: 6px; }
+        #News ul li { margin-bottom: 6px; }
+        .incoming-badge {
+            display: inline-block;
+            background: #ff8c42;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 9px;
+            border-radius: 12px;
+            margin-left: 6px;
+            vertical-align: 2px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+    </style>
 </head>
 
-<div class="header noselect">
-    <div class="content row">
-        <div class="header-text">
-            <div class="header-name">
-                <h1>Chenhao Zheng</h1>
+<body>
+    <!-- Header / Top Nav -->
+    <header id="top-bar" class="navbar-fixed-top animated-header">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-brand">
+                    <a href="index.html" style="font-size:1.3em;color:black">Chenhao Zheng</a>
+                </div>
             </div>
-            <div class="header-subtitle">
-                <!-- TODO: -->
+            <nav class="collapse navbar-collapse navbar-right" role="navigation">
+                <div class="main-menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#News">News</a></li>
+                        <li><a href="#Research">Research</a></li>
+                        <li><a href="#Work">Work</a></li>
+                        <li><a href="#Publication">Publication</a></li>
+                        <li><a href="#Projects">Capstone</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" style="margin-top: -80px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <div class="block wow fadeInRight animated" data-wow-delay=".2s" data-wow-duration="400ms"
+                        style="visibility: visible; animation-duration: 400ms; animation-name: fadeInRight;">
+                        <br>
+                        <div align="center"><img class="icon" src="files/newme.png" style="max-width: 260px; width: 100%; border-radius: 8px;"></div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-7">
+                    <br>
+                    <div class="block wow fadeInLeft animated" data-wow-delay=".2s" data-wow-duration="400ms"
+                        style="visibility: visible; animation-duration: 400ms; animation-name: fadeInLeft; margin-bottom: 10px;">
+                        <h2>About</h2>
+                        <p>
+                            I am a second-year CS Ph.D. student at the <a href="https://www.cs.washington.edu/">University of Washington</a>,
+                            advised by Prof. <a href="http://www.ranjaykrishna.com/index.html">Ranjay Krishna</a>.
+                            I am also a student researcher at the <a href="https://allenai.org/">Allen Institute for AI</a>.
+                            Before UW, I was an undergraduate at the <a href="https://cse.engin.umich.edu/">University of Michigan</a>
+                            and <a href="https://www.ji.sjtu.edu.cn/cn/">Shanghai Jiao Tong University</a>, where I was fortunate to also work with
+                            Prof. <a href="https://andrewowens.com/">Andrew Owens</a> and Dr. <a href="https://adamharley.com/">Adam Harley</a>.
+                            My primary research interest lies in computer vision and multimodal learning.
+                        </p>
+                        <p>
+                            <a href="mailto:chzheng@cs.washington.edu">Email</a>
+                            &nbsp;&middot;&nbsp; <a href="https://scholar.google.com/citations?user=ks4QxAMAAAAJ&hl=en">Google Scholar</a>
+                            &nbsp;&middot;&nbsp; <a href="https://x.com/Michael3014018">Twitter</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </section>
+
+    <!-- News -->
+    <section id="News" style="margin-top: -100px;">
+        <div class="container">
+            <div class="row">
+                <div class="block wow fadeInRight animated" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: fadeInRight;">
+                    <h2>News</h2>
+                    <ul>
+                        <li>[2026/04] I will join <a href="https://ai.meta.com/research/">FAIR</a> as a visiting researcher this fall. Also honored to receive Meta PhD fellowship from the <a href="https://www.metacareers.com/careerprograms/research?tab=AI%20Mentorship">AI Mentorship Program</a>.</li>
+                        <li>[2026/02] <a href="https://arxiv.org/abs/2602.22779">TrajTok</a> and <a href="https://arxiv.org/abs/2510.09110">Synthetic Object Compositions</a> were accepted to CVPR 2026.</li>
+                        <li>[2026/01] I will join <a href="https://www.salesforceairesearch.com/">Salesforce AI Research</a> as a research scientist intern this summer, working with <a href="https://www.niebles.net/">Juan Carlos Niebles</a> and <a href="https://www.linkedin.com/in/silvio-savarese-97b76114">Silvio Savarese</a>.</li>
+                        <li>[2025/06] <a href="https://arxiv.org/abs/2505.23617">TrajViT</a> was selected as a Highlight paper at ICCV 2025.</li>
+                        <!-- <li>[2025/03] I will join the <a href="https://allenai.org/">Allen Institute for AI</a> as a research scientist intern this summer.</li> -->
+                        <!-- <li>[2025/02] "Synthetic Visual Genome" paper was accepted to CVPR 2025.</li>
+                        <li>[2024/08] "Acoustic Volume Rendering" paper was accepted to NeurIPS 2024 and selected as <b style="color:#a00">Spotlight</b>.</li>
+                        <li>[2024/02] "Iterated Learning" paper was accepted to CVPR 2024.</li>
+                        <li>[2023/12] Selected as <b>Honorable Mention</b> for the <a href="https://cra.org/crae/awards/cra-outstanding-undergraduate-researchers/">2024 CRA Outstanding Undergraduate Researcher Award</a> in the United States.</li>
+                        <li>[2023/02] "EXIF as Language" paper was accepted to CVPR and selected as an <b style="color:#a00">Oral</b>.</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </section>
+
+    <!-- Research -->
+    <section id="Research" style="padding-top: 40px; margin-top: -60px;">
+        <div class="container">
+            <div class="row">
+                <div class="block wow fadeInRight animated" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: fadeInRight;">
+                    <h2>Research</h2>
+                    <!-- TODO(user): if you want the 3-icon image wall like ificl.github.io,
+                         drop 3 square thumbnails into images/ and uncomment the block below. -->
+                    <!--
+                    <div align="center">
+                    <div class="img-wall" style="width: 85%;">
+                        <div class="img-wall-element">
+                            <img src="images/video_understanding.png" style="border: 3px gray dashed; border-radius: 15px;">
+                            <div><b>Video Understanding</b></div>
+                        </div>
+                        <div class="img-wall-element">
+                            <img src="images/video_to_3d.png" style="border: 3px gray dashed; border-radius: 15px;">
+                            <div><b>Video &rarr; 3D / Robotics</b></div>
+                        </div>
+                        <div class="img-wall-element">
+                            <img src="images/vlm.png" style="border: 3px gray dashed; border-radius: 15px;">
+                            <div><b>Vision-Language Models</b></div>
+                        </div>
+                    </div>
+                    </div>
+                    -->
+                    <p class="research">
+                        I am generally interested in various problems in world modeling and vision-language models. My research so far has focused on two directions.
+                    </p>
+                    <p class="research">
+                        <b>1) Modeling object dynamics from in-the-wild videos.</b>
+                        I believe learning object dynamics from large-scale internet videos can enable tons of applications in generative synthesis, robotics, and behavior prediction.
+                        My research proposes a new <a href="https://arxiv.org/abs/2602.22779">tokenization scheme</a>
+                        and a <!-- TODO: add MolmoMotion arXiv link --><a href="">motion representation</a>
+                        to model and <i>predict</i> such object dynamics.
+                    </p>
+                    <p class="research">
+                        <b>2) Multimodal representation learning.</b>
+                        I proposed a novel <a href="https://arxiv.org/abs/2301.04647">low-level representation</a>
+                        and a <a href="https://arxiv.org/abs/2404.02145">training algorithm</a>
+                        for vision-language models.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </section>
+
+    <!-- Work Experience -->
+    <section id="Work" style="padding-top: 40px; margin-top: -60px;">
+        <div class="container">
+            <div class="row">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <h2>Work Experience</h2>
+                </div>
             </div>
 
-            <div class="header-bio">
-               
-                <p> 
-                    I am a second year CS Ph.D. student at the <a href="https://www.cs.washington.edu/">University of Washington</a>, advised by Prof. <a href="http://www.ranjaykrishna.com/index.html">Ranjay Krishna</a>. I am also a student researcher at <a href="https://allenai.org/">Allen Institute of AI</a>. Before that, 
-                    I was an undergraduate student at <a href="https://cse.engin.umich.edu/">University of Michigan</a> and <a href="https://www.ji.sjtu.edu.cn/cn/">Shanghai Jiao Tong University</a>, where I was fortunate to also work with  Prof. <a href="https://andrewowens.com/">Andrew Owens</a> and Dr. <a href="https://adamharley.com/">Adam Harley</a>. 
-                    I work on computer vision, with a particular interest in videos (video understanding, video->3d, video->robotics) and large vision-language models. <br/>
+            <div class="row">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-3 col-sm-3" align="center">
+                        <a href="https://ai.meta.com/research/"><img src="images/work/meta_ai.svg" alt=""
+                                style="min-width: 100px; max-width: 100px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-8">
+                        <p>
+                            <span class="mybold">Meta AI Research (FAIR)</span><span class="incoming-badge">Incoming</span>, &nbsp; Starting from Sept. 2026<br>
+                            Visiting Researcher
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-3 col-sm-3" align="center">
+                        <a href="https://www.salesforceairesearch.com/"><img src="images/work/salesforce.svg" alt=""
+                                style="min-width: 100px; max-width: 100px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-8">
+                        <p>
+                            <span class="mybold">Salesforce AI Research</span><span class="incoming-badge">Incoming</span>, &nbsp; June 2026 ~ Sept. 2026<br>
+                            Research Scientist Intern <br>
+                            Host:
+                            <a href="https://www.niebles.net/">Juan Carlos Niebles</a> and
+                            <a href="https://www.linkedin.com/in/silvio-savarese-97b76114">Silvio Savarese</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-3 col-sm-3" align="center">
+                        <a href="https://allenai.org/"><img src="images/work/ai2.png" alt=""
+                                style="min-width: 100px; max-width: 100px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-8">
+                        <p>
+                            <span class="mybold">Allen Institute for AI</span>, &nbsp; Jan. 2025 ~ June 2026<br>
+                            Student Researcher (also Research Intern, Summer 2025)
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        </div>
+        <hr>
+    </section>
+
+    <!-- Publications -->
+    <section id="Selected Publication" style="padding-top: 40px; margin-top: -60px;">
+        <div class="container">
+            <div class="row">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <h2>Selected Publications</h2>
+                    <p style="color:rgb(165, 165, 165); margin-top: -15px; margin-bottom: 10px;">
+                        <!-- Papers sorted by recency. -->
+                    </p>
+                </div>
+            </div>
+
+
+
+            <div class="row" name="molmomotion" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <img src="publications/MolmoMotion.png" alt="" style="width: 100%; border-radius: 10px;">
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold"><img src="images/new.png" alt="" style="width: 7%;">
+                                MolmoMotion: Forecasting Point Trajectories in 3D with Language Instruction</span><br>
+                            Jianing Zhang*, <b>Chenhao Zheng*</b>, Yajun Yang, Rustin Soraki, Winson Han, Chun-Liang Li, Jason Ren, Max Argus, Jieyu Zhang, Ranjay Krishna<br>
+                            <i>In submission</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" name="trajtok" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://arxiv.org/abs/2602.22779"><img src="publications/trajtok.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold"><img src="images/new.png" alt="" style="width: 7%;">
+                                TrajTok: <i>Learning</i> Trajectory Tokens Enhances Video Understanding</span><br>
+                            <b>Chenhao Zheng</b>, Jieyu Zhang, Jianing Zhang, Weikai Huang, Ashutosh Kumar, Quan Kong, Oncel Tuzel, Chun-Liang Li, Ranjay Krishna<br>
+                            CVPR 2026<br>
+                            <a href="https://arxiv.org/abs/2602.22779">paper</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row" name="sos" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://arxiv.org/abs/2510.09110"><img src="publications/sos.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">Synthetic Object Compositions for Scalable and Accurate Learning in Detection, Segmentation, and Grounding</span><br>
+                            Weikai Huang, Jieyu Zhang, Taoyang Jia, <b>Chenhao Zheng</b>, Ziqi Gao, Jae Sung Park, Winson Han, Ranjay Krishna<br>
+                            <i>In submission</i><br>
+                            <a href="https://arxiv.org/abs/2510.09110">paper</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://github.com/weikaih04/Synthetic-Detection-Segmentation-Grounding-Data">project page</a>
+                        </p>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="row" name="trajvit" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://arxiv.org/abs/2505.23617"><img src="publications/TrajViT.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">One Trajectory, One Token: Grounded Video Tokenization via Panoptic Sub-object Trajectory</span><br>
+                            <b>Chenhao Zheng</b>, Jieyu Zhang, Reza Salehi, Ziqi Gao, Vishnu Iyengar, Norimasa Kobori, Quan Kong, Ranjay Krishna<br>
+                            ICCV 2025 (<span style="color:#a00"><b>Highlight</b></span>)<br>
+                            <a href="https://raivnlab.github.io/trajvit/">project page</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://arxiv.org/abs/2505.23617">paper</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" name="svg" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://arxiv.org/abs/2506.07643"><img src="publications/svg.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">Synthetic Visual Genome</span><br>
+                            Jae Sung Park, Zixian Ma, Linjie Li, <b>Chenhao Zheng</b>, Cheng-Yu Hsieh, Ximing Lu, Khyathi Chandu, Quan Kong, Norimasa Kobori, Ali Farhadi, Yejin Choi, Ranjay Krishna<br>
+                            CVPR 2025<br>
+                            <a href="https://synthetic-visual-genome.github.io/">project page</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://arxiv.org/abs/2506.07643">paper</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" name="avr" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://arxiv.org/abs/2411.06307"><img src="publications/AIR.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">Acoustic Volume Rendering for Neural Impulse Response Field</span><br>
+                            Zitong Lan, <b>Chenhao Zheng</b>, Zhiwei Zheng, Mingmin Zhao<br>
+                            NeurIPS 2024 (<span style="color:#a00"><b>Spotlight</b></span>)<br>
+                            <a href="https://zitonglan.github.io/project/avr/avr.html">project page</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://arxiv.org/abs/2411.06307">paper</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" name="ilclip" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://arxiv.org/pdf/2404.02145.pdf"><img src="publications/ILCLIP.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">Iterated Learning Improves Compositionality in Large Vision-Language Models</span><br>
+                            <b>Chenhao Zheng</b>, Jieyu Zhang, Aniruddha Kembhavi, Ranjay Krishna<br>
+                            CVPR 2024<br>
+                            <a href="https://hellomuffin.github.io/iterated-learning-for-vlm/">project page</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://arxiv.org/pdf/2404.02145.pdf">paper</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://www.youtube.com/watch?v=8UiJNqC14js">video</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" name="exif" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://arxiv.org/abs/2301.04647"><img src="publications/EXIF.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">EXIF as Language: Learning Cross-Modal Associations Between Images and Camera Metadata</span><br>
+                            <b>Chenhao Zheng</b>, Ayush Shrivastav, Andrew Owens<br>
+                            CVPR 2023 (<span style="color:#a00"><b>Highlight</b></span>)<br>
+                            <a href="https://hellomuffin.github.io/exif-as-language/">project page</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://arxiv.org/abs/2301.04647">paper</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://www.youtube.com/watch?v=dPHdNgxUXd4">video</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row" name="aesrgan" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://arxiv.org/abs/2112.10046"><img src="publications/A-ESRGAN.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">A-ESRGAN: Training Real-World Blind Super-Resolution with Attention U-Net Discriminators</span><br>
+                            Zihao Wei, Yidong Huang, Yuang Chen, <b>Chenhao Zheng</b>, Jinnan Gao<br>
+                            PRICAI 2023<br>
+                            <a href="https://github.com/stroking-fishes-ml-corp/A-ESRGAN">project page</a>
+                            &nbsp;&middot;&nbsp;
+                            <a href="https://arxiv.org/abs/2112.10046">paper</a>
+                        </p>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <hr>
+    </section>
+
+    <!-- Undergrad Capstone -->
+    <section id="Projects" style="padding-top: 40px; margin-top: -60px;">
+        <div class="container">
+            <div class="row">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <h2>Undergrad Capstone</h2>
+                    <p>A VR capstone project from my undergrad at Michigan that I really love.</p>
+                </div>
+            </div>
+
+            <div class="row" name="urban-rush" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://498team1p3.wixsite.com/studio1"><img src="projects/urban_rush.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">Urban Rush: Making Fitness Fun with VR</span><br>
+                            with <a href="https://salmanra.github.io">Rahmy Salmon</a>,
+                            <a href="https://kalpit-s.github.io">Kalpit Haresh Sutariya</a>,
+                            <a href="https://akashn7.github.io/">Akash Nallani</a>, and
+                            <a href="https://ashishdevelops.github.io/eecs498_portfolio">Ashish Patel</a>.<br>
+                            An immersive VR experience encouraging exercise via a narrative-based exploration in a procedurally generated city.<br>
+                            <a href="https://498team1p3.wixsite.com/studio1">project page</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row" name="cse-simulator" style="margin-bottom: 20px;">
+                <div class="block wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="400ms"
+                    style="visibility: visible; animation-duration: 400ms; animation-name: none;">
+                    <div class="col-md-5 col-sm-5" align="center">
+                        <a href="https://www.youtube.com/watch?v=QoayhawL4Co"><img src="projects/cse-simulator.png" alt="" style="width: 100%; border-radius: 10px;"></a>
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <p>
+                            <span class="mybold">CSE-Simulator</span><br>
+                            with <a href="https://salmanra.github.io">Rahmy Salmon</a> and
+                            <a href="https://kalpit-s.github.io">Kalpit Haresh Sutariya</a>.<br>
+                            An interactive VR computer-lab simulator built in Unreal Engine, with a Matrix-style flying game mode.<br>
+                            <a href="https://www.youtube.com/watch?v=QoayhawL4Co">demo video</a>
+                        </p>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <hr>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="col-md-8">
+                <p class="copyright">
+                    &copy; 2026 Chenhao Zheng &mdash; Template adapted from
+                    <a href="https://ificl.github.io/">Ziyang Chen</a>'s site
+                    (originally by <a href="https://github.com/krishna-alagiri/krishna-alagiri.github.io">Krishna Alagiri</a>, MIT licensed).
                 </p>
             </div>
-
-            <div class="header-links">
-                <a class="btn" href="email/email.html">Email</a> /
-                <a class="btn" href="https://scholar.google.com/citations?user=ks4QxAMAAAAJ&hl=en">Google Scholar</a> /
-                <a class="btn" href="https://x.com/Michael3014018">Twitter</a> <br/>
-                
-            </div>
-
         </div>
-        <div class="header-profile-picture"></div>
-    </div>
-</div>
-<div class="content" style="padding-bottom: 64px;">
-    
-    <div>
-        <h2 class="noselect">News</h2>
-        <p>
-            <li style="margin: 5px;" >
-                <b>2025-06:</b> "Trajectory tokenization" paper was accepted to ICCV 2025 and selected as  <span class="bold"> highlight.</span>
-              </li>
-            <li style="margin: 5px;" >
-                <b>2025-03:</b> I will join <a href="https://allenai.org/">Allen Institute of AI</a> as a research scientist intern this summer.
-              </li>
-            <li style="margin: 5px;" >
-                <b>2025-02:</b> "Synthetic Visual Genome" paper was accepted to CVPR 2025
-              </li>
-            <li style="margin: 5px;" >
-                <b>2024-08:</b> "Acoustic volume rendering" paper was accepted to NeurIPS 2024 and selected as <span class="bold"> spolight.</span>
-              </li>
-            <li style="margin: 5px;" >
-                <b>2024-02:</b> "Iterated learning" paper was accepted to CVPR 2024.
-              </li>
-            <li style="margin: 5px;" >
-              <b>2023-12:</b> Selected as <span class="bold">Honorable Mention</span> for <a href="https://cra.org/crae/awards/cra-outstanding-undergraduate-researchers/">2024 CRA Outstanding Undergraduate Researcher Award</a> in the United States.
-            </li>
-            <li style="margin: 5px;">
-              <b>2023-02:</b>  "EXIF as language" paper was accepted to CVPR conference and selected as <span class="bold">a oral paper.</span>
-            </li>
-        </p>
-    </div>
+    </footer>
 
-
-
-    <div>
-        <h2 class="noselect">Publications and preprints</h2>
-        <p>Papers sorted by recency. Representative papers are <span style="background-color: #fff8df">highlighted</span>.</p>
-
-        <div class="publication row clearfix">
-            <div class="row-media" style="background-image: url(publications/trajtok.png);"></div>
-            <div class="row-text">
-                <a class="publication-title bold" href="">TrajTok: <span class="italic bold">Learning</span> Trajectory Tokens Enhances Video Understanding</a><br/>
-                <span class="bold">Chenhao Zheng</span>, Jieyu Zhang, Jianing Zhang, Weikai Huang, Ashutosh Kumar, Quan Kong, Oncel Tuzel, Chun-Liang Li, Ranjay Krishna<br/>
-                <span class="italic">In submission<br/>
-                pdf comes soon
-            </div>
-        </div>
-
-
-
-        <div class="publication row clearfix">
-            <div class="row-media" style="background-image: url(publications/sos.png);"></div>
-            <div class="row-text">
-                <a class="publication-title bold" href="https://arxiv.org/abs/2510.09110">Synthetic Object Compositions for Scalable and Accurate Learning in Detection, Segmentation, and Grounding</a><br/>
-                Weikai Huang, Jieyu Zhang, Taoyang Jia, <span class="bold">Chenhao Zheng</span>,  Ziqi Gao, Jae Sung Park, Winson Han, Ranjay Krishna<br/>
-                <span class="italic">In submission<br/>
-                <a class="btn btn-orange" href="https://arxiv.org/abs/2510.09110">paper</a> / <a class="btn btn-orange" href="https://github.com/weikaih04/Synthetic-Detection-Segmentation-Grounding-Data">project page</a>
-            </div>
-        </div>
-
-        <div class="highlight publication row clearfix">
-            <div class="row-media" style="background-image: url(publications/TrajViT.png);"></div>
-            <div class="row-text">
-                <a class="publication-title bold" href="https://arxiv.org/abs/2505.23617">One Trajectory, One Token:
-                    Grounded Video Tokenization via Panoptic Sub-object Trajectory</a><br/>
-                <span class="bold">Chenhao Zheng</span>,  
-                Jieyu Zhang,
-                Reza Salehi,
-                Ziqi Gao,
-                Vishnu Iyengar, Norimasa Kobori, Quan Kong,
-                Ranjay Krishna<br/>
-                <span class="italic">ICCV</span>, 2025 (<span class="bold" style="color: #f04328;">highlight</span>)<br/>
-                <a class="btn btn-orange" href="https://arxiv.org/abs/2505.23617">paper</a> / <a class="btn btn-orange" href="https://raivnlab.github.io/trajvit/">project page</a>
-            </div>
-        </div>
-        <div class="publication row clearfix">
-            <div class="row-media" style="background-image: url(publications/svg.png);"></div>
-            <div class="row-text">
-                <a class="publication-title bold" href="https://arxiv.org/abs/2506.07643">Synthetic Visual Genome</a><br/>
-                Jae Sung Park,
-                Zixian Ma,  
-                Linjie Li,
-                <span class="bold">Chenhao Zheng</span>,
-                Cheng-Yu Hsieh,
-                Ximing Lu, Khyathi Chandu, Quan Kong, Norimasa Kobori, 
-                Ali Farhadi,
-                Yejin Choi</a>,
-                Ranjay Krishna<br/>
-                <span class="italic">CVPR</span>, 2025 <br/>
-                <a class="btn btn-orange" href="https://arxiv.org/abs/2506.07643">paper</a> / <a class="btn btn-orange" href="https://synthetic-visual-genome.github.io/">project page</a>
-            </div>
-        </div>
-        <div class="highlight publication row clearfix">
-            <div class="row-media" style="background-image: url(publications/AIR.png);"></div>
-            <div class="row-text">
-                <a class="publication-title bold" href="https://arxiv.org/abs/2411.06307">Acoustic Volume Rendering for Neural Impulse Response Field</a><br/>
-                Zitong Lan,
-                <span class="bold">Chenhao Zheng</span>,  
-                Zhiwei Zheng,
-                Mingmin Zhao<br/>
-                <span class="italic">NeurIPS</span>, 2024 (<span class="bold" style="color: #f04328;">spotlight</span>) <br/>
-                <a class="btn btn-orange" href="https://arxiv.org/abs/2411.06307">paper</a> / <a class="btn btn-orange" href="https://zitonglan.github.io/project/avr/avr.html">project page</a>
-            </div>
-        </div>
-        <div class="highlight publication row clearfix">
-            <div class="row-media" style="background-image: url(publications/ILCLIP.png);"></div>
-            <div class="row-text">
-                <a class="publication-title bold" href="https://arxiv.org/pdf/2404.02145.pdf">Iterated Learning Improves Compositionality in Large Vision-Language Models</a><br/>
-                <span class="bold">Chenhao Zheng</span>,  
-                 Jieyu Zhang,
-                 Aniruddha Kembhavi,
-                 Ranjay Krishna<br/>
-                <span class="italic">CVPR</span>, 2024<br/>
-                <a class="btn btn-orange" href="https://arxiv.org/pdf/2404.02145.pdf">paper</a> / <a class="btn btn-orange" href="https://hellomuffin.github.io/iterated-learning-for-vlm/">project page</a> / <a class="btn btn-dark" href="https://www.youtube.com/watch?v=8UiJNqC14js">video</a>
-            </div>
-        </div>
-        <div class="publication row clearfix">
-            <div class="row-media" style="background-image: url(publications/EXIF.png);"></div>
-            <div class="row-text">
-                <a class="publication-title bold" href="https://arxiv.org/abs/2301.04647">EXIF as Language: Learning Cross-Modal Associations Between Images and Camera Metadata</a><br/>
-                <span class="bold">Chenhao Zheng</span>,
-                Ayush Shrivastav,
-                Andrew Owens</a>
-                <br>
-                <span class="italic">CVPR</span>, 2023 (<span class="bold" style="color: #f04328;">highlight</span>) <br/>
-                <a class="btn btn-red" href="https://arxiv.org/abs/2301.04647">paper</a> / <a class="btn btn-orange" href="https://hellomuffin.github.io/exif-as-language/">project page</a> / <a class="btn btn-dark" href="https://www.youtube.com/watch?v=dPHdNgxUXd4">video</a>
-            </div>
-        </div>
-        <div class="publication row clearfix">
-            <div class="row-media" style="background-image: url(publications/A-ESRGAN.png);"></div>
-            <div class="row-text">
-                <a class="publication-title bold" href="https://arxiv.org/abs/2112.10046">A-ESRGAN: Training Real-World Blind Super-Resolution with Attention U-Net Discriminators</a><br/>
-                Zihao Wei, Yidong Huang, Yuang Chen, <span class="bold">Chenhao Zheng</span>, Jinnan Gao  <br/>
-                <span class="italic">PRICAI</span>, 2023<br/>
-                <a class="btn btn-orange" href="https://github.com/stroking-fishes-ml-corp/A-ESRGAN">project page</a> / <a class="btn btn-red" href="https://arxiv.org/abs/2112.10046">paper</a> / <a class="btn btn-dark" href="bibtex/lancaster2023modemv2.txt">bibtex</a>
-            </div>
-        </div>
-    </div>
-    <div>
-        <h2 class="noselect">Side projects</h2>
-        <div class="publication row clearfix">
-            <div class="row-media" style="background-image: url(projects/urban_rush.png);"></div>
-            <div class="row-text">
-                <a class="bold" href="https://498team1p3.wixsite.com/studio1">Urban Rush: Making fitness fun with VR</a><br/>
-                <em>This project was done with <a href="https://salmanra.github.io">Rahmy Salmon</a>, <a href="https://kalpit-s.github.io">Kalpit Haresh Sutariya</a>, <a href="https://akashn7.github.io/">Akash Nallani</a> and <a href=" https://ashishdevelops.github.io/eecs498_portfolio">Ashish Patel</a>. We develop immersive VR experiences aimed at encouraging exercise. 
-                Urban Rush lets the player to have fun in a narrative-based exploration while completing activities in a unique, procedurally generated city environment.</em><br/>
-                <a class="btn btn-orange" href="https://498team1p3.wixsite.com/studio1">project page</a> 
-            </div>
-        </div>
-        <div class="publication row clearfix">
-            <div class="row-media" style="background-image: url(projects/cse-simulator.png);"></div>
-            <div class="row-text">
-                <a class="bold" href="https://www.youtube.com/watch?v=QoayhawL4Co">CSE-Simulator</a><br/>
-                <em>This project was done with <a href="https://salmanra.github.io">Rahmy Salmon</a> and <a href="https://kalpit-s.github.io">Kalpit Haresh Sutariya</a>. We build an interactive computer lab simulator in VR using Unreal Engine. It also has a game mode where you can enjoy the same flying experience as Neo did in <a href="https://www.imdb.com/title/tt0133093/">The Matrix</a> movie.</em><br/>
-                <a class="btn btn-orange" href="https://www.youtube.com/watch?v=QoayhawL4Co">Demo video</a>
-            </div>
-        </div>
-    </div>
-
-</div>
-<div class="footer noselect">
-    <div class="footer-content">
-        &copy; Template from <a href="https://github.com/nicklashansen/nicklashansen.github.io">Nicklas Hansen</a>. No web trackers. <a class="publication-title bold" href="pdfs/IL_CLIP.pdf">.</a><br/>
-    </div>
-</div>
-
+</body>
+</html>
