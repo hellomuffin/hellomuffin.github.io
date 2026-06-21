@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Three Simulators for Interactive Online Policy Evaluation</title>
+<style>
+  :root{--bg:#0f1115;--card:#191c23;--ink:#e8eaed;--mut:#9aa3b2;--acc:#6ea8fe;--acc2:#7ee787;--acc3:#ffa657;--line:#2a2f3a}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  a{color:var(--acc);text-decoration:none}
+  header{padding:64px 24px 40px;text-align:center;background:radial-gradient(1200px 400px at 50% -10%,#1d2330,transparent)}
+  header h1{font-size:2.4rem;margin:0 0 12px}
+  header p{color:var(--mut);max-width:760px;margin:8px auto;font-size:1.05rem}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  nav{position:sticky;top:0;background:rgba(15,17,21,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
+  nav .wrap{display:flex;gap:20px;flex-wrap:wrap;padding:12px 24px}
+  nav a{color:var(--mut);font-weight:600;font-size:.95rem}
+  nav a:hover{color:var(--ink)}
+  section{padding:48px 0;border-top:1px solid var(--line)}
+  h2{font-size:1.8rem;margin:0 0 6px}
+  .tag{display:inline-block;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+  .t-hab{background:#1a2a44;color:var(--acc)} .t-over{background:#16331f;color:var(--acc2)} .t-craft{background:#3a2a16;color:var(--acc3)}
+  .lead{color:var(--mut);max-width:820px}
+  .grid{display:grid;gap:18px;margin-top:22px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:780px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .card video,.card img{width:100%;display:block;background:#000;aspect-ratio:1/1;object-fit:cover}
+  .card.wide video,.card.wide img{aspect-ratio:16/10}
+  .card .body{padding:14px 16px}
+  .card h3{margin:0 0 6px;font-size:1.05rem}
+  .card p{margin:0;color:var(--mut);font-size:.9rem}
+  .pill{font-size:.72rem;color:var(--mut);border:1px solid var(--line);border-radius:6px;padding:2px 7px;margin-right:6px}
+  table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.92rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--mut);font-weight:700}
+  code{background:#0c0e12;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.86em;color:#d7c4ff}
+  pre{background:#0c0e12;border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto;font-size:.84rem;color:#cdd6e4}
+  .ok{color:var(--acc2);font-weight:700}.warn{color:var(--acc3);font-weight:700}
+  ul{color:var(--mut)} li{margin:4px 0}
+  .note{background:#161a22;border-left:3px solid var(--acc3);padding:12px 16px;border-radius:6px;color:var(--mut);font-size:.9rem;margin-top:16px}
+  footer{padding:40px 24px;text-align:center;color:var(--mut);font-size:.85rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Three Simulators for Proactive Streaming Agents</h1>
+  <p>A hands-on guide to <b>Habitat 3.0</b>, <b>Overcooked-AI</b>, and <b>Craftium</b> — the candidate engines for an
+  <i>Interactive Online Policy Evaluation</i> benchmark, where a user policy acts in a world and a proactive
+  assistant only watches the user's RGB stream and decides whether, when, and what to communicate.</p>
+  <p style="font-size:.92rem">Every video below was generated headless on a GPU cluster by the task code in this repo.</p>
+</header>
+
+<nav><div class="wrap">
+  <a href="#why">Why these three</a>
+  <a href="#habitat">Habitat 3.0</a>
+  <a href="#overcooked">Overcooked-AI</a>
+  <a href="#craftium">Craftium</a>
+  <a href="#compare">Compare</a>
+  <a href="#run">Run it yourself</a>
+</div></nav>
+
+<section id="why"><div class="wrap">
+  <h2>Why these three engines</h2>
+  <p class="lead">The benchmark needs a <b>user policy</b> that physically acts, a separate <b>assistant policy</b> that
+  observes only the egocentric/2D RGB stream, and <b>outcome metrics</b> (did the intervention help?). The three engines
+  span the fidelity/scale spectrum that question requires:</p>
+  <div class="grid g3">
+    <div class="card"><div class="body"><span class="tag t-hab">HABITAT 3.0</span>
+      <p><b>Photorealistic 3D homes.</b> Humanoid + robot agents, egocentric RGB/depth, real manipulation. Highest visual &amp; physical fidelity; closest to real wearable-camera deployment.</p></div></div>
+    <div class="card"><div class="body"><span class="tag t-over">OVERCOOKED-AI</span>
+      <p><b>Real-time 2D coordination.</b> Two cooks, sequential recipe, bundled human-play data. Cleanest testbed for <i>when to speak</i>, intent prediction, and interruption cost.</p></div></div>
+    <div class="card"><div class="body"><span class="tag t-craft">CRAFTIUM</span>
+      <p><b>Open-world voxel sandbox.</b> Huge compositional action space, first-person RGB, fully moddable tasks. Best for long-horizon, open-ended assistance.</p></div></div>
+  </div>
+</div></section>
+
+<!-- ================= HABITAT ================= -->
+<section id="habitat"><div class="wrap">
+  <span class="tag t-hab">HABITAT 3.0</span>
+  <h2>Habitat 3.0 — photorealistic embodied homes</h2>
+  <p class="lead">A high-performance 3D simulator (FAIR) with photorealistic indoor scenes, rigid-body physics, and
+  articulated agents. Habitat 3.0 adds native <b>human (SMPL-X) avatars</b> and <b>multi-agent</b> co-habitation — so one
+  body can be the user while another agent assists. We drive long-horizon household tasks and render the robot's
+  <b>egocentric head camera</b> at every step.</p>
+
+  <div class="grid g2" style="margin-top:24px">
+    <div class="card wide"><video src="assets/habitat/habitat_tour.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>Egocentric navigation (realistic RGB)</h3>
+      <p>A first-person tour of a furnished room — the exact visual stream the assistant consumes.</p></div></div>
+    <div class="card wide"><video src="assets/habitat/set_table_oracle.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>SetTable &nbsp;<span class="ok">✓ solved</span></h3>
+      <p>11-step PDDL plan: navigate → open cabinet → pick bowl → place → open fridge → pick fruit → place → stop. Objects land within ~1&nbsp;mm of their goals.</p></div></div>
+    <div class="card wide"><video src="assets/habitat/tidy_house_oracle.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>TidyHouse &nbsp;<span class="ok">✓ solved</span></h3>
+      <p>20-step plan relocating 5 misplaced objects to their correct receptacles.</p></div></div>
+    <div class="card wide"><video src="assets/habitat/prepare_groceries_oracle.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>PrepareGroceries &nbsp;<span class="ok">✓ solved</span></h3>
+      <p>12-step plan moving 3 grocery items between fridge, counter and cabinets.</p></div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card"><video src="assets/habitat/wipe.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>wipeBlackboard &nbsp;<span class="ok">✓ custom-authored</span></h3>
+      <p>Habitat has no native blackboard, so we authored one: a board with 24 dirt marks; a scripted sponge sweep wipes them away. <b>24/24 cleaned.</b></p></div></div>
+    <div class="card"><div style="display:grid;grid-template-columns:1fr 1fr">
+      <img src="assets/habitat/wipe_dirty.png"><img src="assets/habitat/wipe_clean.png"></div>
+      <div class="body"><h3>Before → after</h3><p>The board starts covered in dirt marks (left) and ends clean (right) — an outcome the benchmark can measure directly.</p></div></div>
+  </div>
+
+  <h3 style="margin-top:30px">What it can simulate</h3>
+  <table>
+    <tr><th>Multi-step tasks</th><td><b>Home Assistant Benchmark</b> (SetTable, TidyHouse, PrepareGroceries) defined in PDDL with explicit stage-goals; <b>Social Rearrangement</b> &amp; <b>Social Navigation</b> (robot + humanoid); <b>PARTNR</b> (100k natural-language collaboration tasks).</td></tr>
+    <tr><th>Action space</th><td>Navigation (discrete + continuous base velocity); 7-DOF arm + suction/magic grasp; high-level oracle skills (<code>OracleNav</code>, <code>PddlApply</code>); humanoid SMPL-X joint &amp; pick actions.</td></tr>
+    <tr><th>Agents</th><td>SMPL-X humanoids (~12 bodies); robots Spot / Fetch / Stretch; native multi-agent.</td></tr>
+    <tr><th>Observations</th><td>Egocentric RGB / depth / semantic / panoptic; GPS+compass; object detectors.</td></tr>
+    <tr><th>Diversity</th><td>HSSD (200+ scenes), ReplicaCAD, HM3D, MP3D; YCB + articulated objects (fridges, drawers).</td></tr>
+  </table>
+  <div class="note">How we solve them: an <b>oracle PDDL executor</b> runs each task's grounded <code>solution</code> plan via <code>PddlApplyAction</code> and signals completion with <code>rearrange_stop</code> — yielding <span class="ok">pddl_success=True</span> on all three HAB tasks. This is exactly the kind of competent "user policy" the benchmark needs target trajectories from.</div>
+</div></section>
+
+<!-- ================= OVERCOOKED ================= -->
+<section id="overcooked"><div class="wrap">
+  <span class="tag t-over">OVERCOOKED-AI</span>
+  <h2>Overcooked-AI — real-time 2D coordination</h2>
+  <p class="lead">The canonical human-AI coordination testbed (Carroll et&nbsp;al., NeurIPS 2019). Two cooks share a kitchen and
+  must jointly run a sequential recipe under time pressure: <b>onion → pot ×3 → cook → wait → plate → deliver</b>, looped for
+  reward. We run goal-directed <code>GreedyHumanModel</code> cooks across diverse layouts and render the 2D RGB stream.</p>
+
+  <div class="grid g3" style="margin-top:24px">
+    <div class="card"><video src="assets/overcooked/cramped_room.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>cramped_room</h3><p>Shared pot; tight space. <span class="ok">2 soups delivered.</span></p></div></div>
+    <div class="card"><video src="assets/overcooked/asymmetric_advantages.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>asymmetric_advantages</h3><p>Players have different access to stations. <span class="ok">3 soups.</span></p></div></div>
+    <div class="card"><video src="assets/overcooked/counter_circuit_o_1order.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>counter_circuit</h3><p>Ring layout encouraging hand-offs over a counter.</p></div></div>
+    <div class="card"><video src="assets/overcooked/coordination_ring.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>coordination_ring</h3><p>Needs true cooperation — greedy agents alone score <span class="warn">0</span>, which is exactly where an assistant would help.</p></div></div>
+    <div class="card"><video src="assets/overcooked/forced_coordination.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>forced_coordination</h3><p>Neither cook can finish alone — a pure coordination stress-test.</p></div></div>
+    <div class="card"><img src="assets/overcooked/soup_delivery.png">
+      <div class="body"><h3>A delivery moment</h3><p>Chef plating a finished soup (pot timer + onions visible).</p></div></div>
+  </div>
+
+  <h3 style="margin-top:30px">What it can simulate</h3>
+  <table>
+    <tr><th>Multi-step task</th><td>The ordered soup-delivery loop, repeated over the episode horizon; branching recipes (onion vs tomato) and bonus orders.</td></tr>
+    <tr><th>Action space</th><td>6 actions/player: N/S/E/W, STAY, and a context-dependent INTERACT (pick up / drop / fill pot / start cook / plate / deliver). Stepped as a joint action.</td></tr>
+    <tr><th>Agents</th><td>Scriptable user policies: <code>GreedyHumanModel</code>, Random, FixedPlan, AgentFromPolicy; <b>bundled human-human play datasets</b>.</td></tr>
+    <tr><th>Observations</th><td>Rendered RGB frame, plus featurized vector and lossless grid-tensor encodings.</td></tr>
+    <tr><th>Diversity</th><td>~50 layouts, each encoding a different coordination challenge, + programmatic generation.</td></tr>
+  </table>
+  <div class="note">The layouts that score <b>0</b> with two independent greedy cooks (forced_coordination, coordination_ring) are the most interesting for us: they isolate the value of a proactive assistant that resolves coordination.</div>
+</div></section>
+
+<!-- ================= CRAFTIUM ================= -->
+<section id="craftium"><div class="wrap">
+  <span class="tag t-craft">CRAFTIUM</span>
+  <h2>Craftium — open-world voxel sandbox</h2>
+  <p class="lead">A Minecraft-like engine (built on Luanti, ICML 2025) exposed through a Gymnasium API with a first-person RGB
+  stream — no Java, fully Lua-moddable. Best fit for a large compositional action space and long-horizon, open-ended tasks.</p>
+
+  <div class="grid g2" style="margin-top:24px">
+    <div class="card wide"><video src="assets/craftium/choptree.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>ChopTree — first-person forest <span class="ok">✓ rendered</span></h3>
+      <p>The user walks through a procedurally generated forest; the agent is rewarded for chopping wood. Real headless render on the GPU cluster.</p></div></div>
+    <div class="card wide" id="craftium-more"><video src="assets/craftium/plant_tree.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>PlantTree — custom task <span class="ok">✓ rendered</span></h3>
+      <p>A new task authored as a Lua mod on the forest world: the user is given saplings and rewarded for planting them.
+      Sibling tasks <b>BuildHouse</b> (reward per wood block placed) and <b>ProcDungeons</b> (procedural multi-room dungeon)
+      use the same pipeline and capture during good GPU render windows.</p></div></div>
+  </div>
+
+  <h3 style="margin-top:30px">What it can simulate</h3>
+  <table>
+    <tr><th>Tasks</th><td>Built-in: ChopTree, ProcDungeons, Speleo, SpidersAttack, Room, OpenWorld. Custom (authored here): PlantTree, BuildHouse. Plus the open-ended craft/build/survive dependency chain. Fully Lua-extensible; PettingZoo multi-agent.</td></tr>
+    <tr><th>Action space</th><td>Raw: ~21 binary keys (move/jump/sneak/dig/place/drop/inventory/hotbar 1-9) + 2-D continuous mouse look. Per-task <code>Discrete</code> wrappers for convenience.</td></tr>
+    <tr><th>Observations</th><td>First-person RGB (configurable res), optional grayscale and 3-D voxel; player pos/vel/pitch/yaw in <code>info</code>.</td></tr>
+    <tr><th>Diversity</th><td>Procedural worlds &amp; dungeons, day/night, mobs, biomes; the entire Luanti modding ecosystem.</td></tr>
+  </table>
+  <div class="note"><b>Rendering note (engineering reality).</b> This headless cluster exposes only NVIDIA EGL (no software-GL driver, no X server, no root). Luanti's offscreen GL init is racy here (0–25% per launch, varying with shared-GPU state), so we rebuilt the engine from source, added a <b>retry-on-blank wrapper</b>, and a rootless-Xvfb fallback. ChopTree renders cleanly; the other tasks capture opportunistically during good GPU windows.</div>
+</div></section>
+
+<!-- ================= COMPARE ================= -->
+<section id="compare"><div class="wrap">
+  <h2>Side-by-side</h2>
+  <table>
+    <tr><th></th><th>Habitat 3.0</th><th>Overcooked-AI</th><th>Craftium</th></tr>
+    <tr><th>Visual</th><td>Photorealistic 3D, egocentric</td><td>2D top-down sprites</td><td>3D voxel, first-person</td></tr>
+    <tr><th>Action space</th><td>Nav + 7-DOF arm + oracle skills</td><td>6 discrete</td><td>~21 keys + mouse (compositional)</td></tr>
+    <tr><th>User model</th><td>Humanoid / robot policies, oracle PDDL</td><td>GreedyHumanModel + human data</td><td>Scriptable / Lua / RL</td></tr>
+    <tr><th>Multi-agent</th><td>Native (human+robot)</td><td>Native (2 cooks)</td><td>PettingZoo</td></tr>
+    <tr><th>Best for</th><td>Realistic household assistance</td><td>When-to-speak, coordination</td><td>Open-ended long-horizon</td></tr>
+    <tr><th>Headless render here</th><td class="ok">reliable (EGL)</td><td class="ok">reliable (CPU)</td><td class="warn">flaky (EGL) + retry</td></tr>
+  </table>
+</div></section>
+
+<!-- ================= RUN ================= -->
+<section id="run"><div class="wrap">
+  <h2>Run it yourself</h2>
+  <p class="lead">Each engine lives in its own micromamba environment under <code>sims/</code>. Representative commands:</p>
+<pre># Habitat 3.0 — solve a household task with the oracle, render egocentric RGB
+micromamba run -n habitat python sims/habitat/task_hab_oracle.py set_table
+micromamba run -n habitat python sims/habitat/task_wipe_blackboard.py
+
+# Overcooked-AI — full soup-delivery loop + multi-layout showcase
+SDL_VIDEODRIVER=dummy micromamba run -n overcooked python sims/overcooked/task_soup_delivery.py
+SDL_VIDEODRIVER=dummy micromamba run -n overcooked python sims/overcooked/showcase.py
+
+# Craftium — first-person tasks (uses a retry-on-blank render wrapper)
+micromamba run -n craftium-build python sims/minecraft/capture_choptree.py
+micromamba run -n craftium-build python sims/minecraft/capture_all.py   # PlantTree / BuildHouse / ProcDungeons</pre>
+  <p class="lead">Full research notes and reproduction steps are in each engine's <code>RESEARCH.md</code> and <code>SETUP.md</code>,
+  and a status overview in <code>sims/TASKS.md</code>.</p>
+</div></section>
+
+<footer>
+  Built as an instructional walkthrough of three embodied simulators for the Interactive Online Policy Evaluation benchmark.<br>
+  All visuals generated headless on an 8×H200 cluster from the task code in this repository.
+</footer>
+</body>
+</html>
