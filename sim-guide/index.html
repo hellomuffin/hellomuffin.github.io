@@ -120,19 +120,21 @@
       <i>&ldquo;Help me clean up the toys in bedroom. Place all the toy food, pencil case, file sorter, and toy vehicle on the table.&rdquo;</i> — the language-specified, multi-room household tasks the benchmark ultimately targets.</p></div></div>
   </div>
 
-  <h3 style="margin-top:28px">Multi-step household tasks — solved by an oracle planner</h3>
-  <p class="lead">Each task ships a grounded PDDL <code>solution</code>; our oracle executor runs it
-  (navigate → open cabinet/fridge → pick → place → … → stop) and renders egocentric RGB at every operator.
-  All reach <span class="ok">pddl_success&nbsp;=&nbsp;True</span>.</p>
-  <div class="grid g4">
-    <div class="card mini"><video src="assets/habitat/set_table_oracle.mp4" autoplay muted loop playsinline></video>
-      <div class="body"><h3>SetTable</h3><p>11 steps · open cabinet+fridge · 2 objects <span class="ok">✓</span></p></div></div>
-    <div class="card mini"><video src="assets/habitat/tidy_house_oracle.mp4" autoplay muted loop playsinline></video>
-      <div class="body"><h3>TidyHouse</h3><p>20 steps · 5 objects relocated <span class="ok">✓</span></p></div></div>
-    <div class="card mini"><video src="assets/habitat/prepare_groceries_oracle.mp4" autoplay muted loop playsinline></video>
-      <div class="body"><h3>PrepareGroceries</h3><p>12 steps · fridge↔counter · 3 objects <span class="ok">✓</span></p></div></div>
-    <div class="card mini"><video src="assets/habitat/rearrange_easy_oracle.mp4" autoplay muted loop playsinline></video>
-      <div class="body"><h3>RearrangeEasy</h3><p>4 steps · pick &amp; place <span class="ok">✓</span></p></div></div>
+  <h3 style="margin-top:28px">Multi-step household tasks — continuous egocentric</h3>
+  <p class="lead">An oracle PDDL planner solves each task's grounded plan
+  (navigate → open cabinet/fridge → pick → place → … → stop); all reach
+  <span class="ok">pddl_success&nbsp;=&nbsp;True</span> (SetTable 11-step, TidyHouse 20-step,
+  PrepareGroceries 12-step, RearrangeEasy). Below is the <b>continuous egocentric stream</b> the
+  user emits while moving through the rearrangement — the actual video an assistant would watch.</p>
+  <div class="grid g2">
+    <div class="card wide"><video src="assets/habitat/hab_continuous.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>Continuous egocentric rearrangement <span class="ok">✓</span></h3>
+      <p>481 frames of smooth, oracle-driven first-person motion through the task scene — the
+      actual continuous stream the assistant watches (no keyframe gaps).</p></div></div>
+    <div class="card wide"><video src="assets/habitat/tidy_house_oracle.mp4" autoplay muted loop playsinline></video>
+      <div class="body"><h3>Oracle plan stages (TidyHouse) <span class="ok">✓</span></h3>
+      <p>The symbolic plan stage-by-stage: navigate → open → pick → place across 5 objects,
+      each operator verified (pddl_success=True).</p></div></div>
   </div>
   <div class="grid g2" style="margin-top:16px">
     <div class="card wide"><video src="assets/habitat/wipe.mp4" autoplay muted loop playsinline></video>
