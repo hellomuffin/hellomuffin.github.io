@@ -86,6 +86,12 @@
     whatever the hands are doing — a true first-person view.</li>
   </ul>
   <div class="note">All scene tours, the object montage, and the manipulation/affordance clips on this page use this HQ recipe (HSSD + HBAO + 2× supersampling).</div>
+  <h3>The settings, measured side by side</h3>
+  <div class="grid g3">
+    <div class="card"><img src="assets/render/hbao.png"><div class="body"><h4>HBAO on / off</h4><p>ambient occlusion adds contact shadows &amp; depth in corners</p></div></div>
+    <div class="card"><img src="assets/render/supersample.png"><div class="body"><h4>2× supersample on / off</h4><p>Lanczos-downscaled render removes edge aliasing</p></div></div>
+    <div class="card"><img src="assets/render/depth_noise.png"><div class="body"><h4>Depth: clean / Redwood noise</h4><p>realistic depth-sensor noise model</p></div></div>
+  </div>
 </div></section>
 
 <!-- 1.1 SCENES -->
@@ -263,6 +269,14 @@
   egocentric stream (left) and the top-down navmesh (right) with the planned path, the walked trajectory, start/goal, and
   the standard metrics.</p>
   <div class="card ex" style="max-width:880px"><video src="assets/nav/nav_demo.mp4" autoplay muted loop playsinline style="aspect-ratio:16/9"></video><div class="body"><h4>PointNav — egocentric + top-down navmesh with trajectory &amp; SPL</h4><p>geodesic path (blue), walked trajectory (green), start (green) / goal (red) / agent (yellow)</p></div></div>
+  <div class="catlabel">THE FOUR NAVIGATION TASKS — each with its task-specific input/output</div>
+  <div class="grid g2 ex">
+    <div class="card"><video src="assets/nav/navtask_objectnav.mp4" autoplay muted loop playsinline style="aspect-ratio:21/9"></video><div class="body"><h4>ObjectNav</h4><p>find an instance of a named object category (target: cracker box)</p></div></div>
+    <div class="card"><video src="assets/nav/navtask_imagenav.mp4" autoplay muted loop playsinline style="aspect-ratio:21/9"></video><div class="body"><h4>ImageNav</h4><p>reach the pose a <b>goal image</b> (inset) was taken from</p></div></div>
+    <div class="card"><video src="assets/nav/navtask_vln.mp4" autoplay muted loop playsinline style="aspect-ratio:21/9"></video><div class="body"><h4>VLN (R2R/RxR)</h4><p>follow a natural-language route instruction</p></div></div>
+    <div class="card"><video src="assets/nav/navtask_eqa.mp4" autoplay muted loop playsinline style="aspect-ratio:21/9"></video><div class="body"><h4>EQA</h4><p>navigate to gather evidence, then answer a question</p></div></div>
+  </div>
+  <div class="note">These four share the same navmesh + egocentric stream; they differ only in the goal specification (coordinate / object / image / language / question). Shown with oracle geodesic execution for visualization — in the benchmark a learned policy would drive the agent.</div>
   <div class="grid g2">
     <div><h3>Navigation task types</h3><table>
       <tr><th>Task</th><th>Goal</th></tr>
@@ -310,8 +324,9 @@
 <section id="tasks"><div class="wrap">
   <span class="sub">8 · putting it together</span>
   <h2>Task catalog (single-agent)</h2>
-  <p class="lead">The components above compose into Habitat's full single-agent task suite. Navigation and rearrangement
-  primitives are demonstrated on this page; the complete taxonomy:</p>
+  <p class="lead">The components above compose into Habitat's full single-agent task suite. A long-horizon example —
+  the humanoid clears three objects from the floor and sets them on the table, chaining pick &amp; place across steps:</p>
+  <div class="card ex" style="max-width:560px"><video src="assets/tasks/multistep.mp4" autoplay muted loop playsinline style="aspect-ratio:1/1"></video><div class="body"><h4>Multi-step "set the table" (3 items, egocentric)</h4><p>step captions track the PDDL plan: pick → carry → place, repeated per object</p></div></div>
   <table>
     <tr><th>Family</th><th>Tasks</th><th>Shown here</th></tr>
     <tr><td>Navigation</td><td>PointNav, ObjectNav, ImageNav, InstanceImageNav</td><td>PointNav ▶ §6</td></tr>
