@@ -50,10 +50,15 @@
   <p style="font-size:.92rem"><a href="../sim-guide/">← back to the three-simulator overview</a></p>
 </header>
 <nav><div class="wrap">
-  <a href="#render">Rendering &amp; dataset</a>
-  <a href="#scenes">1.1 Scenes</a>
-  <a href="#objects">1.2 Objects</a>
-  <a href="#affordances">1.3 Affordances</a>
+  <a href="#render">Rendering</a>
+  <a href="#scenes">1 Scenes</a>
+  <a href="#objects">2 Objects</a>
+  <a href="#affordances">3 Affordances</a>
+  <a href="#sensors">4 Sensors</a>
+  <a href="#embodiment">5 Humanoid</a>
+  <a href="#navigation">6 Navigation</a>
+  <a href="#physics">7 Physics</a>
+  <a href="#tasks">8 Tasks</a>
 </div></nav>
 
 <!-- RENDERING & DATASET JUSTIFICATION -->
@@ -156,6 +161,13 @@
   down to watch its <b>own SMPL-X hand</b> interact with the object — you can see the whole grasping / opening / closing
   process, exactly as a wearable head camera would record it. Each loops a single successful execution.</p>
 
+  <div class="catlabel" style="background:#143024;color:var(--acc2)">PHYSICALLY-GROUNDED GRASP — Habitat's real constraint API (object obeys gravity)</div>
+  <div class="grid g2 ex">
+    <div class="card" style="border-color:#2c7a4b"><video src="assets/affordances/phys_pick.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Pick &amp; drop (real physics)</h4><p>the object is a <b>DYNAMIC</b> rigid body bound to the hand by <code>create_rigid_constraint</code> (the exact call <code>snap_to_obj</code> makes). It <b>hangs under gravity</b> from the hand, and when the constraint is removed it <b>falls to the floor</b>.</p></div></div>
+    <div class="card" style="border-color:#2c7a4b"><video src="assets/affordances/phys_carry.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Carry (object swings)</h4><p>while carried sideways the box <b>swings under its own dynamics</b> on the constraint — not rigidly glued. This is the engine's true grasp behaviour.</p></div></div>
+  </div>
+  <div class="note">These two use Habitat's <b>actual grasp mechanism</b>: a <code>RigidConstraintSettings</code> / <code>RigidConstraintType.Fixed</code> constraint created with <code>sim.create_rigid_constraint(...)</code> between the humanoid's hand link and a dynamic object, stepped with gravity — identical to <code>RearrangeGraspManager.snap_to_obj</code>. The clips below it are the kinematic-pose variants (object follows the hand directly) used for the surface and articulation actions.</div>
+
   <div class="catlabel">MANIPULATION &amp; SURFACE — hand acts on an object / surface</div>
   <div class="grid g2 ex">
     <div class="card"><video src="assets/affordances/pick.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Pick up</h4><p>the hand reaches down, closes on the object, and lifts it off the surface — object rises with the hand</p></div></div>
@@ -200,6 +212,118 @@
   <div class="note"><b>Why this matters:</b> composing these affordances yields the multi-step tasks our benchmark targets —
   e.g. <i>SetTable</i> = nav → open cabinet → pick bowl → place → open fridge → pick fruit → place. Articulation affordances use
   ReplicaCAD's openable furniture (HSSD articulated-object URDFs require a separate asset set); all non-articulated affordances run in HSSD.</div>
+</div></section>
+
+<!-- 4 SENSORS -->
+<section id="sensors"><div class="wrap">
+  <span class="sub">4 · observation space</span>
+  <h2>Sensors &amp; observations</h2>
+  <p class="lead">An agent isn't limited to RGB. Habitat renders the <b>same viewpoint</b> through many sensor modalities
+  simultaneously. Below is one egocentric walk captured through six of them at once.</p>
+  <div class="card ex" style="max-width:760px"><video src="assets/sensors/sensors.mp4" autoplay muted loop playsinline style="aspect-ratio:1/1"></video><div class="body"><h4>RGB · Depth · Instance-segmentation · Fisheye · Orthographic-top · Equirectangular-360</h4><p>all six are live sensors on the same agent, same instant — no post-processing tricks.</p></div></div>
+  <table>
+    <tr><th>Modality</th><th>Sensor class</th><th>Use</th></tr>
+    <tr><td>RGB</td><td><code>CameraSensorSpec</code> (COLOR, PINHOLE)</td><td>appearance</td></tr>
+    <tr><td>Depth</td><td><code>CameraSensorSpec</code> (DEPTH)</td><td>metric range per pixel</td></tr>
+    <tr><td>Semantic / Instance</td><td><code>CameraSensorSpec</code> (SEMANTIC; OBJECT_ID / SEMANTIC_ID target)</td><td>per-pixel object / class labels</td></tr>
+    <tr><td>Equirectangular 360°</td><td><code>EquirectangularSensorSpec</code></td><td>full panoramic awareness</td></tr>
+    <tr><td>Fisheye</td><td><code>FisheyeSensorDoubleSphereSpec</code> (double-sphere)</td><td>wide-FOV lens model</td></tr>
+    <tr><td>Orthographic</td><td><code>CameraSensorSpec</code> (ORTHOGRAPHIC)</td><td>scale-true top-down</td></tr>
+    <tr><td>Noise models</td><td>Redwood-depth, Gaussian, Poisson, salt&amp;pepper, speckle</td><td>realistic sensor noise</td></tr>
+    <tr><td>Localization</td><td>GPS+Compass, Heading, Proximity, Joint/EE-state, IsHolding</td><td>proprioception &amp; goal sensing</td></tr>
+  </table>
+</div></section>
+
+<!-- 5 HUMANOID EMBODIMENT -->
+<section id="embodiment"><div class="wrap">
+  <span class="sub">5 · the human</span>
+  <h2>Humanoid embodiment &amp; locomotion</h2>
+  <p class="lead">The user is a <b>SMPL-X humanoid</b> — a realistic articulated human body (20 links, 17 spherical joints).
+  It is driven by the <code>HumanoidRearrangeController</code>, which turns high-level goals into realistic motion using
+  <b>AMASS motion-capture</b> walk cycles and VPoser reach poses.</p>
+  <div class="grid g2 ex">
+    <div class="card"><video src="assets/locomotion/walk.mp4" autoplay muted loop playsinline style="aspect-ratio:4/3"></video><div class="body"><h4>Walking (AMASS mocap)</h4><p>3rd-person follow of the humanoid walking a navmesh path — natural gait + turning generated by the controller</p></div></div>
+    <div class="card"><img src="assets/locomotion/avatars.png" style="aspect-ratio:3/2;object-fit:cover"><div class="body"><h4>Avatar variants</h4><p>6 of the 12+ SMPL-X bodies (male/female, varied shape &amp; texture) — all share the same skeleton &amp; controller</p></div></div>
+  </div>
+  <table>
+    <tr><th>Aspect</th><th>Detail</th></tr>
+    <tr><td>Body model</td><td>SMPL-X; 12+ prebuilt variants (<code>female_0…3</code>, <code>male_0…3</code>, …), customizable shape betas via Blender add-on</td></tr>
+    <tr><td>Skeleton</td><td>20 links, 17 spherical + fixed joints; root = base transform; <code>KinematicHumanoid</code> (kinematic, collides with physics objects)</td></tr>
+    <tr><td>Controllers</td><td><code>HumanoidRearrangeController</code> (walk / turn / reach), <code>HumanoidSeqPoseController</code> (replay mocap)</td></tr>
+    <tr><td>Motion data</td><td>per-avatar <code>*_motion_data_smplx.pkl</code> — AMASS walk cycle + reach/stop poses</td></tr>
+    <tr><td>Actions</td><td><code>HumanoidJointAction</code>, <code>HumanoidPickAction</code> (reach + magic-grasp), oracle nav</td></tr>
+  </table>
+</div></section>
+
+<!-- 6 NAVIGATION -->
+<section id="navigation"><div class="wrap">
+  <span class="sub">6 · getting around</span>
+  <h2>Navigation &amp; metrics</h2>
+  <p class="lead">Navigation runs on a <b>navmesh</b> with geodesic shortest-path planning. Below: a PointNav episode — the
+  egocentric stream (left) and the top-down navmesh (right) with the planned path, the walked trajectory, start/goal, and
+  the standard metrics.</p>
+  <div class="card ex" style="max-width:880px"><video src="assets/nav/nav_demo.mp4" autoplay muted loop playsinline style="aspect-ratio:16/9"></video><div class="body"><h4>PointNav — egocentric + top-down navmesh with trajectory &amp; SPL</h4><p>geodesic path (blue), walked trajectory (green), start (green) / goal (red) / agent (yellow)</p></div></div>
+  <div class="grid g2">
+    <div><h3>Navigation task types</h3><table>
+      <tr><th>Task</th><th>Goal</th></tr>
+      <tr><td>PointNav</td><td>reach a coordinate (GPS+compass)</td></tr>
+      <tr><td>ObjectNav</td><td>find an instance of an object category</td></tr>
+      <tr><td>ImageNav</td><td>reach the pose a goal image was taken from</td></tr>
+      <tr><td>InstanceImageNav</td><td>find a specific pictured object instance</td></tr>
+      <tr><td>VLN (R2R/RxR)</td><td>follow a natural-language route</td></tr>
+    </table></div>
+    <div><h3>Metrics</h3><table>
+      <tr><th>Metric</th><th>Meaning</th></tr>
+      <tr><td>Success</td><td>reached goal within threshold</td></tr>
+      <tr><td>SPL</td><td>success weighted by path-length efficiency</td></tr>
+      <tr><td>SoftSPL</td><td>smoothed progress-based SPL</td></tr>
+      <tr><td>DistanceToGoal</td><td>remaining geodesic distance</td></tr>
+      <tr><td>Collisions</td><td>contacts with the scene</td></tr>
+    </table></div>
+  </div>
+  <div class="note">Engine: <code>PathFinder</code> (navmesh), <code>ShortestPath</code> / <code>GreedyGeodesicFollower</code>, island detection,
+  <code>snap_point</code>; discrete actions (move/turn/look/stop) or continuous <code>VelocityAction</code>/<code>BaseVelAction</code>.</div>
+</div></section>
+
+<!-- 7 PHYSICS -->
+<section id="physics"><div class="wrap">
+  <span class="sub">7 · dynamics</span>
+  <h2>Physics</h2>
+  <p class="lead">Habitat runs the <b>Bullet</b> physics engine: rigid-body dynamics, articulated joints, and constraints.
+  Objects can be STATIC, KINEMATIC, or fully DYNAMIC (gravity, collision, friction).</p>
+  <div class="grid g3 ex">
+    <div class="card"><video src="assets/physics/physics_demo.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Rigid-body dynamics</h4><p>a column of objects falls under gravity, collides, and settles into a pile</p></div></div>
+    <div class="card"><video src="assets/physics/phys_pick.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Grasp constraint</h4><p>object held by a rigid constraint hangs under gravity, drops when released</p></div></div>
+    <div class="card"><video src="assets/physics/phys_carry.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Carry dynamics</h4><p>the held object swings on the constraint while carried</p></div></div>
+  </div>
+  <table>
+    <tr><th>Feature</th><th>API</th></tr>
+    <tr><td>Motion types</td><td><code>MotionType.STATIC / KINEMATIC / DYNAMIC</code></td></tr>
+    <tr><td>Rigid objects</td><td><code>RigidObjectManager</code>; apply_force / impulse / torque; mass, friction, restitution, damping</td></tr>
+    <tr><td>Articulated objects</td><td>URDF joints (Revolute / Prismatic / Spherical / Fixed); joint motors (PD control)</td></tr>
+    <tr><td>Constraints</td><td><code>create_rigid_constraint</code> — Fixed / PointToPoint (used for grasping)</td></tr>
+    <tr><td>Collision</td><td>contact points, raycasting, collision groups, discrete collision detection</td></tr>
+  </table>
+</div></section>
+
+<!-- 8 TASKS -->
+<section id="tasks"><div class="wrap">
+  <span class="sub">8 · putting it together</span>
+  <h2>Task catalog (single-agent)</h2>
+  <p class="lead">The components above compose into Habitat's full single-agent task suite. Navigation and rearrangement
+  primitives are demonstrated on this page; the complete taxonomy:</p>
+  <table>
+    <tr><th>Family</th><th>Tasks</th><th>Shown here</th></tr>
+    <tr><td>Navigation</td><td>PointNav, ObjectNav, ImageNav, InstanceImageNav</td><td>PointNav ▶ §6</td></tr>
+    <tr><td>Vision-language</td><td>VLN (R2R / RxR), EQA (embodied question answering)</td><td>catalog</td></tr>
+    <tr><td>Manipulation</td><td>RearrangePick, RearrangePlace, Reach</td><td>pick/place ▶ §3</td></tr>
+    <tr><td>Articulated</td><td>Open/Close Drawer, Open/Close Fridge</td><td>open/close ▶ §3</td></tr>
+    <tr><td>Multi-step (PDDL)</td><td>rearrange, <b>set_table</b>, <b>tidy_house</b>, <b>prepare_groceries</b></td><td>composed from §3 + §6</td></tr>
+  </table>
+  <div class="note">Long-horizon tasks are specified in <b>PDDL</b> and executed by chaining the skills above
+  (<code>PddlApplyAction</code> over an oracle plan). Example: <i>prepare_groceries</i> = repeat[ nav → open fridge → pick item →
+  nav → place on counter → close fridge ]. Robot embodiments and human-robot collaboration (Spot/Fetch/Stretch, social
+  nav/rearrange, PARTNR) are out of scope for this human-centric reference.</div>
 </div></section>
 
 <footer>
