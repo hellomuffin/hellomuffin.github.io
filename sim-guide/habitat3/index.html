@@ -76,7 +76,9 @@
     <li><b>HSSD scenes</b> instead of test reconstructions — removes jagged walls.</li>
     <li><b>2× supersampling</b> (render at 2× resolution, Lanczos downscale) — anti-aliases edges (Habitat sensors have no MSAA).</li>
     <li><b>HBAO</b> ambient occlusion (<code>enable_hbao=True</code>) — adds contact shadows / depth.</li>
-    <li>Eye-height egocentric camera (~1.4 m) with 90° HFOV.</li>
+    <li><b>Head-mounted egocentric camera</b> — the sensor is anchored to the humanoid's actual <code>head</code> link
+    (Habitat's <code>ArticulatedAgentCameraParams.attached_link_id</code> mechanism) so it tracks the head, and it gazes at
+    whatever the hands are doing — a true first-person view.</li>
   </ul>
   <div class="note">All scene tours, the object montage, and the manipulation/affordance clips on this page use this HQ recipe (HSSD + HBAO + 2× supersampling).</div>
 </div></section>
@@ -154,10 +156,12 @@
   down to watch its <b>own SMPL-X hand</b> interact with the object — you can see the whole grasping / opening / closing
   process, exactly as a wearable head camera would record it. Each loops a single successful execution.</p>
 
-  <div class="catlabel">MANIPULATION — hand grasps / carries the object</div>
+  <div class="catlabel">MANIPULATION &amp; SURFACE — hand acts on an object / surface</div>
   <div class="grid g2 ex">
     <div class="card"><video src="assets/affordances/pick.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Pick up</h4><p>the hand reaches down, closes on the object, and lifts it off the surface — object rises with the hand</p></div></div>
     <div class="card"><video src="assets/affordances/place.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Place / put down</h4><p>carries the held object across and sets it down at a new spot, then releases</p></div></div>
+    <div class="card"><video src="assets/affordances/push.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Push / slide</h4><p>the hand pushes the object across the surface without lifting it</p></div></div>
+    <div class="card"><video src="assets/affordances/wipe.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Wipe / sweep</h4><p>the open hand sweeps back and forth across a surface (cleaning motion)</p></div></div>
   </div>
 
   <div class="catlabel">ARTICULATION — hand opens / closes furniture (joint moves with the hand)</div>
@@ -169,11 +173,18 @@
     <div class="card"><video src="assets/affordances/close_cabinet.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Close cabinet</h4><p>hand pushes the cabinet door closed</p></div></div>
     <div class="card"><video src="assets/affordances/close_drawer.mp4" autoplay muted loop playsinline></video><div class="body"><h4>Close drawer</h4><p>drawer slides back in</p></div></div>
   </div>
-  <div class="note">Embodiment: a kinematic <b>SMPL-X humanoid</b> (a realistic human body + hand), driven by
-  <code>HumanoidRearrangeController.calculate_reach_pose</code> so the hand actually reaches the target; the object/joint is
-  coupled to the hand so the interaction is physically coherent. Camera = a sensor at the eyes, forward + pitched down ~35°,
-  2× supersampled with HBAO. Manipulation runs in HSSD; articulation uses ReplicaCAD's openable furniture (the only Habitat
-  furniture shipping with usable joints).</div>
+  <div class="note"><b>Embodiment &amp; camera.</b> A kinematic <b>SMPL-X humanoid</b> (realistic body + hand), driven by
+  <code>HumanoidRearrangeController.calculate_reach_pose</code>, which poses the arm <i>and</i> sets a mocap-derived
+  grasping hand shape as it reaches. The camera is anchored to the humanoid's real <code>head</code> link and gazes at the
+  manipulation point, so it tracks the head like a head-mounted GoPro. 2× supersampled + HBAO. Manipulation runs in HSSD;
+  articulation uses ReplicaCAD's openable furniture (the only Habitat furniture shipping with usable joints).</div>
+  <div class="note"><b>Honest note on "grasping" in Habitat.</b> Habitat does <b>not</b> simulate fingers physically
+  wrapping an object — by design it uses <b>abstract / "magic" grasp</b>: once the hand is within a threshold, the object is
+  bound to the hand with a rigid physics <i>constraint</i> (<code>RearrangeGraspManager.snap_to_obj</code> →
+  <code>create_hold_constraint</code>), and the SMPL-X hand shows a mocap grip pose. Articulated furniture is opened the
+  same way — a constraint on the handle <i>marker</i> (<code>snap_to_marker</code>) so the joint follows the hand. This is
+  the same grasp abstraction every Habitat task (rearrangement, PARTNR) is built on; there is no dexterous finger-closing in
+  the simulator. The clips above reflect exactly what the engine can express.</div>
 
   <h3>Comprehensive affordance / action catalog</h3>
   <table>
