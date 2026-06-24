@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>VirtualHome — The Multi-Step Task Space</title>
+<style>
+:root{--bg:#0e1116;--card:#171b22;--ink:#e9edf2;--mut:#97a1b0;--acc:#c792ea;--acc2:#7ee787;--acc3:#ffa657;--line:#262c37}
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+a{color:var(--acc);text-decoration:none}
+header{padding:64px 24px 40px;text-align:center;background:radial-gradient(1200px 460px at 50% -10%,#241b36,transparent)}
+header h1{font-size:2.4rem;margin:0 0 10px} header p{color:var(--mut);max-width:860px;margin:8px auto;font-size:1.05rem}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+section{padding:48px 0;border-top:1px solid var(--line)}
+h2{font-size:1.8rem;margin:0 0 6px} h3{font-size:1.15rem;margin:22px 0 6px}
+.sub{color:var(--acc);font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+.lead{color:var(--mut);max-width:900px}
+.grid{display:grid;gap:16px;margin-top:18px} .g2{grid-template-columns:1fr 1fr} .g3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:800px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card img{width:100%;border-radius:8px;display:block}
+.stat{display:flex;gap:20px;flex-wrap:wrap;margin:16px 0}
+.stat div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 18px}
+.stat b{font-size:1.5rem;color:var(--acc2);display:block} .stat span{color:var(--mut);font-size:.8rem}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.86rem}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)} th{color:var(--mut)}
+code{background:#0b0d11;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.84em;color:#d7c4ff}
+pre{background:#0b0d11;border:1px solid var(--line);border-radius:8px;padding:13px;overflow:auto;font-size:.82rem;color:#cdd6e3}
+.note{background:#141821;border-left:3px solid var(--acc3);padding:12px 16px;border-radius:6px;color:var(--mut);font-size:.9rem;margin-top:14px}
+.ok{color:var(--acc2)} .axis{border-left:3px solid var(--acc);padding-left:14px;margin:14px 0}
+footer{padding:36px 24px;text-align:center;color:var(--mut);font-size:.85rem;border-top:1px solid var(--line)}
+</style></head><body>
+<header><h1>The Multi-Step Task Space</h1>
+<p>How many, how complex, and how diverse the household tasks we can <b>compositionally</b> generate in VirtualHome —
+grounded in the real affordance inventory of the 7 apartments, and bounded by common-sense plausibility.</p>
+<p style="font-size:.9rem"><a href="index.html">← back to VirtualHome reference</a></p></header>
+
+<section id="model"><div class="wrap"><span class="sub">The generative model</span>
+<h2>Task = Scene × Program, filtered by plausibility</h2>
+<p class="lead">A task is a <b>goal program</b> — a sequence of atomic actions <code>[Action] &lt;object&gt;</code> — executed by an
+agent in a <b>scene</b>. Complexity is composed along four orthogonal axes, and every candidate program is filtered by two
+gates: <b>precondition validity</b> (enforced by the simulator) and <b>common-sense plausibility</b> (must be imposed on top).</p>
+<div class="grid g2">
+<div class="card axis"><h3>① Scene complexity</h3><p class="lead">7 base apartments · 50 hand-authored variants · unlimited via <code>procedural_generation()</code>. 4–5 rooms and 320–444 objects each.</p></div>
+<div class="card axis"><h3>② Navigation route</h3><p class="lead"># rooms traversed (1 → 3+), number of legs/sub-goals, path length, doorways threaded. See the floor plan &amp; trajectory below.</p></div>
+<div class="card axis"><h3>③ Manipulation depth</h3><p class="lead">Chain length L, number of distinct objects, container nesting (open→take→close), state changes, and ordering constraints.</p></div>
+<div class="card axis"><h3>④ Plausibility tier</h3><p class="lead">type-valid ⊃ semantically-sensible ⊃ goal-coherent. The plausible space is a small, structured fraction of the syntactic space.</p></div>
+</div></div></section>
+
+<section id="nav"><div class="wrap"><span class="sub">Axis ② · navigation</span>
+<h2>Top-down layout &amp; walked trajectory</h2>
+<p class="lead">Reconstructed from the scene graph (room bounding boxes + object footprints). The green path is a real recorded
+agent trajectory — a single <code>[Walk]&lt;bed&gt;</code> routes <b>across three rooms</b> (livingroom → kitchen → bedroom),
+the unit of "navigation complexity." Any walk's per-frame agent position is available (pose stream), so trajectories are fully recoverable.</p>
+<div class="grid g2">
+<div class="card"><img src="assets/floorplan_traj.png"><p style="color:#97a1b0;font-size:.84rem;margin-top:8px">Apartment 0 — floor plan + a 3-room walked trajectory (● start, ★ goal)</p></div>
+<div class="card"><img src="assets/floorplan_env2.png"><p style="color:#97a1b0;font-size:.84rem;margin-top:8px">Apartment 2 — a different 5-room layout (route complexity varies by scene)</p></div>
+</div></div></section>
+
+<section id="alphabet"><div class="wrap"><span class="sub">The alphabet</span>
+<h2>Atomic actions &amp; their affordance gates</h2>
+<p class="lead">Each manipulation action requires its object to carry a property. The instance counts (apartment 0) and the
+object-class vocabulary (across all 314 classes) set the branching factor at every step.</p>
+<table><tr><th>Action</th><th>Requires property</th><th>Instances in apt 0</th><th>Object classes (of 314)</th></tr>
+<tr><td>Grab</td><td>GRABBABLE</td><td>222</td><td>229</td></tr>
+<tr><td>Put (on)</td><td>SURFACES (dest)</td><td>80</td><td>41</td></tr>
+<tr><td>PutIn</td><td>CONTAINERS+CAN_OPEN</td><td>62</td><td>34</td></tr>
+<tr><td>Open / Close</td><td>CAN_OPEN</td><td>88</td><td>68</td></tr>
+<tr><td>SwitchOn / SwitchOff</td><td>HAS_SWITCH</td><td>28</td><td>49</td></tr>
+<tr><td>Sit / Lie</td><td>SITTABLE / LIEABLE</td><td>14</td><td>10 / 7</td></tr>
+<tr><td>Drink / Pour</td><td>DRINKABLE / RECIPIENT</td><td>—</td><td>10 / 27</td></tr>
+<tr><td>Walk / WalkTowards</td><td>(any object or room)</td><td>444 nodes</td><td>all</td></tr></table></div></section>
+
+<section id="counting"><div class="wrap"><span class="sub">How many</span>
+<h2>Counting the space — the combinatorial explosion</h2>
+<div class="stat"><div><b>2,561</b><span>atomic interactions (7 apts)</span></div>
+<div><b>142,959</b><span>single pick-and-place tasks</span></div>
+<div><b>17,845</b><span>open→take→close→place chains</span></div>
+<div><b>∞</b><span>length-L &amp; procedural scenes</span></div></div>
+<p class="lead">Per apartment, the number of <i>valid</i> tasks at each manipulation depth:</p>
+<table><tr><th>scene</th><th>rooms</th><th>nodes</th><th>grab</th><th>surf</th><th>cont</th><th>open</th><th>switch</th><th>atomic</th><th>pick-&amp;-place</th><th>container-chain</th></tr><tr><td>apt 0</td><td>4</td><td>444</td><td>222</td><td>80</td><td>62</td><td>88</td><td>28</td><td>468</td><td>31,524</td><td>6,160</td></tr><tr><td>apt 1</td><td>4</td><td>320</td><td>119</td><td>82</td><td>36</td><td>55</td><td>26</td><td>293</td><td>14,042</td><td>738</td></tr><tr><td>apt 2</td><td>5</td><td>401</td><td>154</td><td>104</td><td>40</td><td>78</td><td>27</td><td>382</td><td>22,176</td><td>312</td></tr><tr><td>apt 3</td><td>4</td><td>359</td><td>157</td><td>79</td><td>41</td><td>65</td><td>21</td><td>344</td><td>18,840</td><td>790</td></tr><tr><td>apt 4</td><td>4</td><td>358</td><td>183</td><td>65</td><td>61</td><td>73</td><td>23</td><td>393</td><td>23,058</td><td>5,135</td></tr><tr><td>apt 5</td><td>4</td><td>325</td><td>132</td><td>67</td><td>47</td><td>65</td><td>23</td><td>321</td><td>15,048</td><td>3,350</td></tr><tr><td>apt 6</td><td>4</td><td>354</td><td>151</td><td>80</td><td>41</td><td>66</td><td>24</td><td>342</td><td>18,271</td><td>1,360</td></tr><tr style='font-weight:700;color:#7ee787'><td>Σ 7 apts</td><td>29</td><td>2561</td><td>1118</td><td>557</td><td>328</td><td>490</td><td>172</td><td>2,543</td><td>142,959</td><td>17,845</td></tr></table>
+<div class="note"><b>Why it explodes.</b> A length-2 pick-and-place is <code>|grabbable| × |receptacles|</code> ≈ 222×142 ≈ 31k <i>per apartment</i>.
+Each extra step multiplies by the branching factor again: a length-L plan is bounded by <code>(alphabet)^L</code> ≈ 400<sup>L</sup>
+syntactically. Multiply by 7 apartments × 50 variants × unlimited procedural scenes → the raw space is effectively unbounded.
+The interesting question is not how many exist, but how many are <b>plausible</b>.</div></div></section>
+
+<section id="plausible"><div class="wrap"><span class="sub">The real constraint</span>
+<h2>Common-sense plausibility: three nested gates</h2>
+<div class="grid g3">
+<div class="card"><h3>① Type-valid</h3><p class="lead"><b>Simulator-enforced.</b> The action's required property must hold and pre-conditions must be met (can't <code>Open</code> a non-openable; can't <code>Put</code> without first holding; must be <code>CLOSE</code>). Prunes all type-invalid combinations automatically.</p></div>
+<div class="card"><h3>② Semantically sensible</h3><p class="lead"><b>Must be added.</b> Object↔receptacle compatibility: <code>Put(food, fridge)</code> ✓ vs <code>Put(food, toilet)</code> ✗; <code>Put(plate, dishwasher)</code> ✓ vs <code>Put(plate, bed)</code> ✗. The sim allows both — common sense forbids the second.</p></div>
+<div class="card"><h3>③ Goal-coherent</h3><p class="lead"><b>The narrowest gate.</b> The chain must achieve a recognizable everyday goal — <i>tidy up</i>, <i>prepare a snack</i>, <i>get ready for bed</i> — not a random valid sequence. This is what makes a task a <i>task</i>.</p></div></div>
+<div class="note">The plausible space is a small, <b>structured</b> subset of the ~hundreds-of-thousands of type-valid programs. Generating good tasks = sampling the syntactic space, then filtering by (②) a semantic object–receptacle compatibility model and (③) a goal template / LLM plausibility check. This is exactly the recipe behind large LLM-generated task sets (e.g. PARTNR's 100k).</div></div></section>
+
+<section id="templates"><div class="wrap"><span class="sub">Compositional ladder</span>
+<h2>Example task templates, by complexity tier</h2>
+<div class="grid g2">
+<div class="card"><h3>T1 · atomic</h3><pre>[SwitchOn] &lt;tv&gt;</pre><p class="lead">1 action · 0 navigation · ~2,561 in the 7 scenes.</p></div>
+<div class="card"><h3>T2 · pick &amp; place</h3><pre>[Walk]  &lt;apple&gt;
+[Grab]  &lt;apple&gt;
+[Walk]  &lt;kitchentable&gt;
+[Put]   &lt;apple&gt; &lt;kitchentable&gt;</pre><p class="lead">2 manip + 2 nav · 1 object · ~143k.</p></div>
+<div class="card"><h3>T3 · container retrieval (your example)</h3><pre>[Walk]  &lt;fridge&gt;
+[Open]  &lt;fridge&gt;
+[Grab]  &lt;apple&gt;
+[Close] &lt;fridge&gt;
+[Walk]  &lt;table&gt;
+[Put]   &lt;apple&gt; &lt;table&gt;</pre><p class="lead">container nesting + state changes · ~18k.</p></div>
+<div class="card"><h3>T4 · multi-room, multi-object</h3><pre>[Walk]&lt;bedroom&gt; [Grab]&lt;cup&gt;
+[Walk]&lt;kitchen&gt; [Open]&lt;dishwasher&gt;
+[PutIn]&lt;cup&gt;&lt;dishwasher&gt; [Close]&lt;dishwasher&gt;
+[Walk]&lt;livingroom&gt; [Grab]&lt;plate&gt;
+[Walk]&lt;kitchen&gt; [PutIn]&lt;plate&gt;&lt;dishwasher&gt;</pre><p class="lead">3 rooms · 2 objects · ordering · the "tidy up" goal — combinatorially vast, plausibility-pruned.</p></div></div></div></section>
+
+<section id="diversity"><div class="wrap"><span class="sub">How diverse</span>
+<h2>Diversity dimensions</h2>
+<div class="tagrow" style="display:flex;flex-wrap:wrap;gap:8px">
+<span class="card" style="padding:6px 12px">object identity (314 classes)</span>
+<span class="card" style="padding:6px 12px">room &amp; layout (8 room types)</span>
+<span class="card" style="padding:6px 12px">receptacle type (surface / container)</span>
+<span class="card" style="padding:6px 12px">action mix (open/switch/sit/pour…)</span>
+<span class="card" style="padding:6px 12px">navigation depth (1–3+ rooms)</span>
+<span class="card" style="padding:6px 12px">temporal ordering constraints</span>
+<span class="card" style="padding:6px 12px">spatial constraints (on/in/next-to)</span>
+<span class="card" style="padding:6px 12px">single vs multi-agent</span></div>
+<div class="note"><b>Bottom line.</b> The raw compositional space is effectively unbounded (≳10⁵ tasks at depth ≤3 per apartment, exponential beyond, × unlimited scenes). The <i>useful</i> space is the plausibility-filtered subset — large but structured — which is exactly what a benchmark should sample along these four axes.</div></div></section>
+
+<footer>Grounded in the measured affordance inventory of VirtualHome's 7 apartments · part of the Interactive Online Policy Evaluation benchmark.</footer>
+</body></html>
