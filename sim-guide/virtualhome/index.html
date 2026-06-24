@@ -53,7 +53,7 @@
 <nav><div class="wrap">
   <a href="#model">Model</a><a href="#scenes">Environments</a><a href="#graph">Scene graph</a>
   <a href="#objects">Objects &amp; states</a><a href="#actions">Actions</a><a href="#sensors">Sensors</a>
-  <a href="#cameras">Cameras</a><a href="#multiagent">Multi-agent</a><a href="#activities">Activities</a>
+  <a href="#cameras">Cameras</a><a href="#multiagent">Multi-agent</a><a href="#activities">Activities</a><a href="#control">Control levels</a>
 </div></nav>
 
 <!-- MODEL -->
@@ -216,6 +216,26 @@ comm.render_script(['&lt;char0&gt; [Walk] &lt;sofa&gt; (1)',
     <div class="card"><div style="display:flex;gap:2px"><div style="width:50%;position:relative"><video src="assets/activity_watch_tv.mp4" autoplay muted loop playsinline style="width:100%;aspect-ratio:3/2;object-fit:cover;display:block"></video><span style="position:absolute;top:4px;left:4px;background:#000a;font-size:.66rem;padding:1px 5px;border-radius:3px;color:#7ee787">3rd-person</span></div><div style="width:50%;position:relative"><video src="assets/activity_watch_tv_ego.mp4" autoplay muted loop playsinline style="width:100%;aspect-ratio:3/2;object-fit:cover;display:block"></video><span style="position:absolute;top:4px;left:4px;background:#000a;font-size:.66rem;padding:1px 5px;border-radius:3px;color:#c792ea">egocentric</span></div></div><div class="body"><h4>"Watch TV" (6-step program)</h4><p>SwitchOn → Walk → Sit → TurnTo → LookAt</p></div></div>
     <div class="card"><div style="display:flex;gap:2px"><div style="width:50%;position:relative"><video src="assets/walk_sit.mp4" autoplay muted loop playsinline style="width:100%;aspect-ratio:3/2;object-fit:cover;display:block"></video><span style="position:absolute;top:4px;left:4px;background:#000a;font-size:.66rem;padding:1px 5px;border-radius:3px;color:#7ee787">3rd-person</span></div><div style="width:50%;position:relative"><video src="assets/walk_sit_ego.mp4" autoplay muted loop playsinline style="width:100%;aspect-ratio:3/2;object-fit:cover;display:block"></video><span style="position:absolute;top:4px;left:4px;background:#000a;font-size:.66rem;padding:1px 5px;border-radius:3px;color:#c792ea">egocentric</span></div></div><div class="body"><h4>"Sit down" (walk → sit)</h4><p>the first activity rendered end-to-end on the cluster</p></div></div>
   </div>
+</div></section>
+
+<!-- CONTROL LEVELS -->
+<section id="control"><div class="wrap">
+  <span class="sub">High-level &harr; low-level</span>
+  <h2>The same task, two control levels</h2>
+  <p class="lead">A complex multi-room errand &mdash; <b>walk from the living room across to the kitchen and open the fridge</b> &mdash;
+  driven two ways. <b>Left:</b> the high-level program <code>[Walk]&nbsp;&lt;fridge&gt; &rarr; [Open]&nbsp;&lt;fridge&gt;</code>, where
+  Unity's NavMesh planner routes through the doorways. <b>Right:</b> the <i>same</i> task executed with <b>low-level commands</b> &mdash;
+  Unity's returned planner path, converted into a sequence of 1&nbsp;m <code>[WalkTowards]</code> steps (+ the final <code>[Open]</code>),
+  rendered as one continuous clip. Both reach the identical end state: <span class="ok">fridge&nbsp;=&nbsp;OPEN</span>.</p>
+  <div class="grid g2 ex">
+    <div class="card"><div style="display:flex;gap:2px"><div style="width:50%;position:relative"><video src="assets/complex_high.mp4" autoplay muted loop playsinline style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block"></video><span style="position:absolute;top:4px;left:4px;background:#000a;font-size:.66rem;padding:1px 5px;border-radius:3px;color:#7ee787">high-level program</span></div><div style="width:50%;position:relative"><video src="assets/complex_low.mp4" autoplay muted loop playsinline style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block"></video><span style="position:absolute;top:4px;left:4px;background:#000a;font-size:.66rem;padding:1px 5px;border-radius:3px;color:#c792ea">low-level commands</span></div></div><div class="body"><h4>Walk to the kitchen &amp; open the fridge &mdash; high-level vs low-level</h4><p>left: <code>[Walk]&rarr;[Open]</code> (NavMesh planner) &nbsp;·&nbsp; right: 9&times;<code>[WalkTowards]</code>+<code>[Open]</code> from the recorded planner path</p></div></div>
+  </div>
+  <div class="note"><b>What converts &mdash; and what doesn't.</b> A high-level action is a macro whose body is the NavMesh A* planner.
+  It converts to low-level commands by <i>materialising that route</i>: you can read Unity's per-frame planner path
+  (<code>save_pose_data</code>) and replay it as 1&nbsp;m <code>WalkTowards</code> / <code>TurnLeft</code> / <code>WalkForward</code> steps.
+  Both pipelines deterministically reach the same <b>scene-graph state</b> (fridge OPEN). They are <b>not</b> frame-identical, however:
+  the Unity sim is non-deterministic (the same script run twice gave 88 vs 59 frames, 0 identical), so equivalence holds at the
+  symbolic-state level, not the pixel level.</div>
 </div></section>
 
 <footer>
