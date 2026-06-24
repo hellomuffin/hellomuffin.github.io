@@ -46,12 +46,12 @@ gates: <b>precondition validity</b> (enforced by the simulator) and <b>common-se
 
 <section id="nav"><div class="wrap"><span class="sub">Axis ② · navigation</span>
 <h2>Top-down layout &amp; walked trajectory</h2>
-<p class="lead">Reconstructed from the scene graph (room bounding boxes + object footprints). The green path is a real recorded
+<p class="lead">Reconstructed from the scene graph — <b>walls</b> (room layout), <b>doors</b> (orange ◾, passages), <b>furniture footprints</b> (occluders), and the <b>floor</b> footprint (walkable area). The green path is a real recorded
 agent trajectory — a single <code>[Walk]&lt;bed&gt;</code> routes <b>across three rooms</b> (livingroom → kitchen → bedroom),
 the unit of "navigation complexity." Any walk's per-frame agent position is available (pose stream), so trajectories are fully recoverable.</p>
 <div class="grid g2">
-<div class="card"><img src="assets/floorplan_traj.png"><p style="color:#97a1b0;font-size:.84rem;margin-top:8px">Apartment 0 — floor plan + a 3-room walked trajectory (● start, ★ goal)</p></div>
-<div class="card"><img src="assets/floorplan_env2.png"><p style="color:#97a1b0;font-size:.84rem;margin-top:8px">Apartment 2 — a different 5-room layout (route complexity varies by scene)</p></div>
+<div class="card"><img src="assets/floorplan2_traj.png"><p style="color:#97a1b0;font-size:.84rem;margin-top:8px">Apartment 0 — floor plan + a 3-room walked trajectory (● start, ★ goal)</p></div>
+<div class="card"><img src="assets/floorplan2_env2.png"><p style="color:#97a1b0;font-size:.84rem;margin-top:8px">Apartment 2 — a different 5-room layout (route complexity varies by scene)</p></div>
 </div></div></section>
 
 <section id="alphabet"><div class="wrap"><span class="sub">The alphabet</span>
@@ -108,6 +108,34 @@ The interesting question is not how many exist, but how many are <b>plausible</b
 [PutIn]&lt;cup&gt;&lt;dishwasher&gt; [Close]&lt;dishwasher&gt;
 [Walk]&lt;livingroom&gt; [Grab]&lt;plate&gt;
 [Walk]&lt;kitchen&gt; [PutIn]&lt;plate&gt;&lt;dishwasher&gt;</pre><p class="lead">3 rooms · 2 objects · ordering · the "tidy up" goal — combinatorially vast, plausibility-pruned.</p></div></div></div></section>
+
+<section id="chains"><div class="wrap"><span class="sub">Beyond open→take→close→place</span>
+<h2>Chain families — the full space of multi-step structure</h2>
+<p class="lead">A chain is any sequence where <b>each action's effect satisfies the next action's precondition</b>. Every action has
+preconditions (required object properties/states) and effects (state changes), so valid chains are <b>paths through a state-transition
+machine</b> over object &amp; agent states. <code>open→grab→close→put</code> is just one path (the "retrieve &amp; relocate" family).
+The action + property set affords many more:</p>
+<table><tr><th>Family</th><th>Pattern (property-gated)</th><th>Example program</th><th>Engine</th></tr>
+<tr><td><b>Retrieve &amp; relocate</b></td><td>Open→Grab→Close→Walk→Put/PutIn</td><td><code>Open fridge · Grab apple · Close fridge · Walk table · Put apple table</code></td><td>Unity</td></tr>
+<tr><td><b>Appliance operation</b> (heat / wash)</td><td>Open→PutIn→Close→SwitchOn→…→SwitchOff→Open→Grab</td><td><code>Open microwave · PutIn food · Close · SwitchOn microwave · SwitchOff · Open · Grab food</code></td><td>Unity</td></tr>
+<tr><td><b>Power / standby toggle</b></td><td>Walk→SwitchOn→(use)→SwitchOff</td><td><code>Walk tv · SwitchOn tv · Sit sofa · Watch tv · SwitchOff tv</code></td><td>Unity</td></tr>
+<tr><td><b>Pour &amp; transfer</b></td><td>Grab(POURABLE)→Pour→(RECIPIENT)→Drink</td><td><code>Grab waterglass · Grab juice · Pour juice waterglass · Drink waterglass</code></td><td>EvolvingGraph</td></tr>
+<tr><td><b>Eat / food-prep</b></td><td>Grab(EATABLE)→Cut(CUTTABLE)→Eat</td><td><code>Grab knife · Cut bread · Eat bread</code></td><td>EvolvingGraph</td></tr>
+<tr><td><b>Clean</b> (state DIRTY→CLEAN)</td><td>Grab(cloth)→Wipe / Put→Wash</td><td><code>Grab rag · Wipe kitchencounter</code> · or <code>Put plate sink · Wash plate</code></td><td>EvolvingGraph</td></tr>
+<tr><td><b>Posture &amp; activity</b></td><td>Walk→Sit/Lie→(activity)→StandUp/WakeUp</td><td><code>Walk bed · Lie bed · Sleep · WakeUp · StandUp</code></td><td>Unity (sit/stand)</td></tr>
+<tr><td><b>Dress</b> (CLOTHES)</td><td>Grab(CLOTHES)→PutOn / PutOff→PutIn(hamper)</td><td><code>Grab jacket · PutOn jacket</code></td><td>EvolvingGraph</td></tr>
+<tr><td><b>Read</b> (READABLE)</td><td>Grab(book)→Sit→Read</td><td><code>Grab book · Sit chair · Read book</code></td><td>EvolvingGraph</td></tr>
+<tr><td><b>Plug &amp; power</b> (HAS_PLUG)</td><td>PlugIn→SwitchOn→…→SwitchOff→PlugOut</td><td><code>PlugIn toaster · SwitchOn toaster · SwitchOff · PlugOut</code></td><td>EvolvingGraph</td></tr>
+<tr><td><b>Assemble / set-table</b></td><td>repeat[ Grab→Walk→Put ] × N items</td><td><code>(plate→Put) (fork→Put) (cup→Put) (food→Put) → kitchentable</code></td><td>Unity</td></tr>
+<tr><td><b>Container→container transfer</b></td><td>Open A→Grab→Close A→Open B→PutIn→Close B</td><td><code>Open fridge · Grab food · Close fridge · Open microwave · PutIn food · Close microwave</code></td><td>Unity</td></tr>
+<tr><td><b>Search &amp; inspect</b> (no manip)</td><td>Find→Walk→TurnTo→LookAt/Touch</td><td><code>Find remote · Walk remote · TurnTo remote · LookAt remote</code></td><td>Unity</td></tr>
+<tr><td><b>State-tidy</b></td><td>Close(all OPEN) / SwitchOff(all ON)</td><td><code>Close fridge · Close cabinet · SwitchOff tv · SwitchOff light</code></td><td>Unity</td></tr>
+<tr><td><b>Multi-agent</b> (parallel/handover)</td><td>char0 … <code>|</code> char1 …</td><td><code>char0 Grab cup | char1 Open dishwasher</code></td><td>Unity</td></tr></table>
+<div class="note"><b>The generative view.</b> Draw a graph whose nodes are (object-state, agent-state) and whose edges are actions
+(an edge exists when the action's precondition holds and it produces the new state). <b>Every directed walk through this graph is a
+valid chain.</b> The families above are the goal-shaped walks; <code>open→take→close→place</code> is one of them. New families appear
+automatically as you include more of the property set — <code>POURABLE, CUTTABLE, CLOTHES, HAS_PLUG, READABLE, DIRTY/CLEAN</code> — most
+of which live in the symbolic Evolving-Graph engine, with the Unity-renderable subset noted above.</div></div></section>
 
 <section id="diversity"><div class="wrap"><span class="sub">How diverse</span>
 <h2>Diversity dimensions</h2>
